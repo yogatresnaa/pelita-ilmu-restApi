@@ -1,0 +1,326 @@
+-- phpMyAdmin SQL Dump
+-- version 5.1.0
+-- https://www.phpmyadmin.net/
+--
+-- Host: localhost
+-- Waktu pembuatan: 04 Okt 2023 pada 07.51
+-- Versi server: 10.4.18-MariaDB
+-- Versi PHP: 7.4.16
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Database: `db_kampus`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `kelas`
+--
+
+CREATE TABLE `kelas` (
+  `id_kelas` int(11) NOT NULL,
+  `id_program_studi` int(11) NOT NULL,
+  `nama` varchar(30) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `kelas`
+--
+
+INSERT INTO `kelas` (`id_kelas`, `id_program_studi`, `nama`) VALUES
+(1, 2, 'Apel'),
+(3, 2, 'mangga');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `program_studi`
+--
+
+CREATE TABLE `program_studi` (
+  `id_program_studi` int(11) NOT NULL,
+  `nama` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `program_studi`
+--
+
+INSERT INTO `program_studi` (`id_program_studi`, `nama`) VALUES
+(2, 'teknik informatika');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `role`
+--
+
+CREATE TABLE `role` (
+  `id_role` int(11) NOT NULL,
+  `nama` varchar(30) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `siswa`
+--
+
+CREATE TABLE `siswa` (
+  `id_siswa` int(11) NOT NULL,
+  `id_kelas` int(11) NOT NULL,
+  `id_program_studi` int(11) NOT NULL,
+  `nis` varchar(20) NOT NULL,
+  `nisn` varchar(20) NOT NULL,
+  `nama` varchar(50) NOT NULL,
+  `jenis_kelamin` varchar(20) NOT NULL,
+  `tempat_lahir` varchar(30) NOT NULL,
+  `tanggal_lahir` date NOT NULL,
+  `hobi` text DEFAULT NULL,
+  `no_telepon` varchar(15) NOT NULL,
+  `alamat` text NOT NULL,
+  `nama_ibu_kandung` varchar(50) NOT NULL,
+  `nama_ayah_kandung` varchar(50) NOT NULL,
+  `no_telepon_ortu` varchar(15) NOT NULL,
+  `id_status` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `siswa`
+--
+
+INSERT INTO `siswa` (`id_siswa`, `id_kelas`, `id_program_studi`, `nis`, `nisn`, `nama`, `jenis_kelamin`, `tempat_lahir`, `tanggal_lahir`, `hobi`, `no_telepon`, `alamat`, `nama_ibu_kandung`, `nama_ayah_kandung`, `no_telepon_ortu`, `id_status`) VALUES
+(1, 1, 2, '12312', '123123123', 'dw', 'Laki-laki', 'Malang', '2023-09-07', '-', '082374838222', 'asdasdsa malang', 'ada', 'ada', '0123210321421', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `status_siswa`
+--
+
+CREATE TABLE `status_siswa` (
+  `id_status` int(11) NOT NULL,
+  `nama` varchar(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `status_siswa`
+--
+
+INSERT INTO `status_siswa` (`id_status`, `nama`) VALUES
+(1, 'Aktif'),
+(2, 'Lulus');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `tahun_ajaran`
+--
+
+CREATE TABLE `tahun_ajaran` (
+  `id_tahun_ajaran` int(11) NOT NULL,
+  `tahun_awal` varchar(8) NOT NULL,
+  `tahun_akhir` varchar(8) NOT NULL,
+  `status` varchar(4) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `tahun_ajaran`
+--
+
+INSERT INTO `tahun_ajaran` (`id_tahun_ajaran`, `tahun_awal`, `tahun_akhir`, `status`) VALUES
+(1, '2022', '2023', '1'),
+(2, '2023', '2024', '1');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `user`
+--
+
+CREATE TABLE `user` (
+  `id_user` int(11) NOT NULL,
+  `id_role` int(11) NOT NULL,
+  `email` varchar(40) NOT NULL,
+  `password` text NOT NULL,
+  `nama` varchar(40) NOT NULL,
+  `foto` text DEFAULT NULL,
+  `deskripsi` text DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `user`
+--
+
+INSERT INTO `user` (`id_user`, `id_role`, `email`, `password`, `nama`, `foto`, `deskripsi`, `created_at`, `updated_at`) VALUES
+(1, 2, '2@gmail.com', 'dwiky', 'dwi', 'asd', 'asdsd', '2023-09-26 16:07:38', '2023-09-26 16:51:58'),
+(2, 2, 'dwi@gmail.com', '$2b$06$48rv8PyCxL7MZiWGqvCv2.eSuRqvh7yNldAdc10rsaaOeK558lElu', 'dwww', NULL, NULL, '2023-09-26 16:25:01', '2023-09-26 16:25:01'),
+(3, 2, 'dwikysahut@gmail.com', '$2b$06$c2QN7SMHzl50NA7bncUR7eoRInAOyJF/kuCqOgTfSqdsGBFH7ieXu', 'dwww', NULL, NULL, '2023-09-26 16:53:37', '2023-09-26 16:53:37');
+
+-- --------------------------------------------------------
+
+--
+-- Stand-in struktur untuk tampilan `view_siswa`
+-- (Lihat di bawah untuk tampilan aktual)
+--
+CREATE TABLE `view_siswa` (
+`id_siswa` int(11)
+,`id_kelas` int(11)
+,`id_program_studi` int(11)
+,`nis` varchar(20)
+,`nisn` varchar(20)
+,`nama` varchar(50)
+,`jenis_kelamin` varchar(20)
+,`tempat_lahir` varchar(30)
+,`tanggal_lahir` date
+,`hobi` text
+,`no_telepon` varchar(15)
+,`alamat` text
+,`nama_ibu_kandung` varchar(50)
+,`nama_ayah_kandung` varchar(50)
+,`no_telepon_ortu` varchar(15)
+,`id_status` int(11)
+,`nama_kelas` varchar(30)
+,`nama_program_studi` varchar(50)
+,`nama_status` varchar(20)
+);
+
+-- --------------------------------------------------------
+
+--
+-- Struktur untuk view `view_siswa`
+--
+DROP TABLE IF EXISTS `view_siswa`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_siswa`  AS SELECT `siswa`.`id_siswa` AS `id_siswa`, `siswa`.`id_kelas` AS `id_kelas`, `siswa`.`id_program_studi` AS `id_program_studi`, `siswa`.`nis` AS `nis`, `siswa`.`nisn` AS `nisn`, `siswa`.`nama` AS `nama`, `siswa`.`jenis_kelamin` AS `jenis_kelamin`, `siswa`.`tempat_lahir` AS `tempat_lahir`, `siswa`.`tanggal_lahir` AS `tanggal_lahir`, `siswa`.`hobi` AS `hobi`, `siswa`.`no_telepon` AS `no_telepon`, `siswa`.`alamat` AS `alamat`, `siswa`.`nama_ibu_kandung` AS `nama_ibu_kandung`, `siswa`.`nama_ayah_kandung` AS `nama_ayah_kandung`, `siswa`.`no_telepon_ortu` AS `no_telepon_ortu`, `siswa`.`id_status` AS `id_status`, `kelas`.`nama` AS `nama_kelas`, `program_studi`.`nama` AS `nama_program_studi`, `status_siswa`.`nama` AS `nama_status` FROM (((`siswa` join `kelas` on(`kelas`.`id_kelas` = `siswa`.`id_kelas`)) join `program_studi` on(`program_studi`.`id_program_studi` = `siswa`.`id_program_studi`)) join `status_siswa` on(`status_siswa`.`id_status` = `siswa`.`id_status`)) ;
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indeks untuk tabel `kelas`
+--
+ALTER TABLE `kelas`
+  ADD PRIMARY KEY (`id_kelas`),
+  ADD KEY `id_program_studi` (`id_program_studi`);
+
+--
+-- Indeks untuk tabel `program_studi`
+--
+ALTER TABLE `program_studi`
+  ADD PRIMARY KEY (`id_program_studi`);
+
+--
+-- Indeks untuk tabel `role`
+--
+ALTER TABLE `role`
+  ADD PRIMARY KEY (`id_role`);
+
+--
+-- Indeks untuk tabel `siswa`
+--
+ALTER TABLE `siswa`
+  ADD PRIMARY KEY (`id_siswa`),
+  ADD KEY `id_program_studi` (`id_program_studi`),
+  ADD KEY `id_kelas` (`id_kelas`),
+  ADD KEY `id_status` (`id_status`);
+
+--
+-- Indeks untuk tabel `status_siswa`
+--
+ALTER TABLE `status_siswa`
+  ADD PRIMARY KEY (`id_status`);
+
+--
+-- Indeks untuk tabel `tahun_ajaran`
+--
+ALTER TABLE `tahun_ajaran`
+  ADD PRIMARY KEY (`id_tahun_ajaran`);
+
+--
+-- Indeks untuk tabel `user`
+--
+ALTER TABLE `user`
+  ADD PRIMARY KEY (`id_user`);
+
+--
+-- AUTO_INCREMENT untuk tabel yang dibuang
+--
+
+--
+-- AUTO_INCREMENT untuk tabel `kelas`
+--
+ALTER TABLE `kelas`
+  MODIFY `id_kelas` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT untuk tabel `program_studi`
+--
+ALTER TABLE `program_studi`
+  MODIFY `id_program_studi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT untuk tabel `role`
+--
+ALTER TABLE `role`
+  MODIFY `id_role` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT untuk tabel `siswa`
+--
+ALTER TABLE `siswa`
+  MODIFY `id_siswa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT untuk tabel `status_siswa`
+--
+ALTER TABLE `status_siswa`
+  MODIFY `id_status` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT untuk tabel `tahun_ajaran`
+--
+ALTER TABLE `tahun_ajaran`
+  MODIFY `id_tahun_ajaran` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT untuk tabel `user`
+--
+ALTER TABLE `user`
+  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
+--
+
+--
+-- Ketidakleluasaan untuk tabel `kelas`
+--
+ALTER TABLE `kelas`
+  ADD CONSTRAINT `kelas_ibfk_1` FOREIGN KEY (`id_program_studi`) REFERENCES `program_studi` (`id_program_studi`);
+
+--
+-- Ketidakleluasaan untuk tabel `siswa`
+--
+ALTER TABLE `siswa`
+  ADD CONSTRAINT `siswa_ibfk_1` FOREIGN KEY (`id_program_studi`) REFERENCES `program_studi` (`id_program_studi`),
+  ADD CONSTRAINT `siswa_ibfk_2` FOREIGN KEY (`id_kelas`) REFERENCES `kelas` (`id_kelas`),
+  ADD CONSTRAINT `siswa_ibfk_3` FOREIGN KEY (`id_status`) REFERENCES `status_siswa` (`id_status`);
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
